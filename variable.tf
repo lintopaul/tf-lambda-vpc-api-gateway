@@ -1,12 +1,3 @@
-variable "myregion" {
-  type = string
-  default = "us-east-2"
-}
-
-variable "accountId" {
-  type = string
-  default = "589137594782"
-}
 variable "cidr" {
   type = string
   default = "10.0.0.0/16"
