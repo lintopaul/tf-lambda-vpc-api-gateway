@@ -1,6 +1,10 @@
 # API Gateway
 resource "aws_api_gateway_rest_api" "api" {
   name = "hello-world-api"
+
+  endpoint_configuration {
+    types = ["REGIONAL"]
+  }
 }
 
 resource "aws_api_gateway_resource" "apigw" {
@@ -51,10 +55,11 @@ resource "aws_api_gateway_deployment" "deploy" {
    stage_name  = "test"
 }
 
+# Lambda permissions
 resource "aws_lambda_permission" "lambda_permission" {
-  statement_id  = "AllowHelloWorldAPIInvoke"
+  statement_id  = "AllowExecutionFromAPIGateway"
   action        = "lambda:InvokeFunction"
-  function_name = "hello-world"
+  function_name = aws_lambda_function.lambda.function_name
   principal     = "apigateway.amazonaws.com"
 
   # The /*/*/* part allows invocation from any stage, method and resource path
